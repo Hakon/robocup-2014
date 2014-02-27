@@ -7,9 +7,10 @@ import java.io.PrintWriter;
 
 public class LeapListener extends Listener {
     private static final long CHANGE_INTERVAL = 50;
-
     int firstHandId = -1;
     int secondHandId = -1;
+
+    boolean droppedLast = true;
 
     private long startTime;
     private PrintWriter printWriter;
@@ -68,33 +69,28 @@ public class LeapListener extends Listener {
         Hand rightHand = hands.rightmost();
         Hand leftHand = hands.leftmost();
 
-        if(hands.count() > 0) {
-            float rightZ = rightHand.stabilizedPalmPosition().getZ();
+        if(hands.count() > 1) {
+            float rightZ = rightHand.palmPosition().getZ();
+            float leftZ = leftHand.palmPosition().getZ();
+
+            rightZ = normalise(rightZ);
+            leftZ = normalise(leftZ);
+
+
             //System.out.println("Z: " + rightZ);
-            if(rightZ > 40)
-                sendCommand("backwards");
-            if(rightZ < -40)
-                sendCommand("forwards");
             if(rightZ < 40 && rightZ > -40)
-                sendCommand("stop");
+                rightZ = 0;
 
-            if(hands.count() > 1) {
-                float roll = leftHand.direction().yaw();
+            if(leftZ < 40 && leftZ > -40)
+                leftZ = 0;
 
-                System.out.println("roll: " + roll);
-
-                //PointableList leftPointables = leftHand.pointables();
-                //if(leftPointables.count() > 1)
-                //   sendCommand("setAngle: " + pointables.leftmost().stabilizedTipPosition().yaw());
-            }
+            sendCommand("speed " + ((int)-leftZ) + " " + ((int)-rightZ));
         }
 
         if(firstHandId != -1) {
             Hand firstHand = frame.hand(firstHandId);
             System.out.println("First hand: " + firstHand);
         }
-
-        startTime = System.currentTimeMillis();
     }
 
     private boolean changeIntervalPassed() {
@@ -102,10 +98,18 @@ public class LeapListener extends Listener {
     }
 
     private void sendCommand(String command) {
-        if (!command.equals(lastSentCommand)) {
+        if (!command.equals(lastSentCommand) && !changeIntervalPassed()) {
             System.out.println("Sending command: " + command);
             printWriter.println(command);
             lastSentCommand = command;
+            startTime = System.currentTimeMillis();
         }
+    }
+
+    private float normalise(float num){
+        int sign = (num >= 0) ? (num == 0) ? 0 : 1 : -1;
+        float normalisedValue = Math.min(150, Math.abs(num));
+
+        return sign*normalisedValue;
     }
 }

@@ -1,3 +1,4 @@
+import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
 
@@ -7,6 +8,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.Math.abs;
 
@@ -31,7 +34,6 @@ public class EV3Server {
 
             out.println("Connection established. Start sending commands madderfakker!");
 
-            Motor.A.setSpeed();
 
 
             while ((inputLine = in.readLine()) != null) {
@@ -57,31 +59,53 @@ public class EV3Server {
     }
 
     public static void processCommand(String inputLine) {
-        switch(inputLine) {
-            case "forwards" :
+        String[] split = inputLine.split(" ");
+        if(split[0].equals("speed")) {
+            int speedL = Integer.parseInt(split[1]);
+            int speedR = Integer.parseInt(split[2]);
+
+            speedL = (int)-(speedL / 150.0 * Motor.A.getMaxSpeed());
+            speedR = (int)-(speedR / 150.0 * Motor.B.getMaxSpeed());
+
+            Motor.A.setSpeed(speedL);
+            Motor.B.setSpeed(speedR);
+
+            if(speedL == 0) {
+                Motor.A.stop();
+            }
+
+            if(speedR == 0) {
+                Motor.B.stop();
+            }
+
+            if(speedL > 0) {
+
                 Motor.A.forward();
-                Motor.B.backward();
-                break;
-            case "backwards" :
+            }
+
+            if(speedR > 0) {
+
+                Motor.B.forward();
+            }
+
+            if(speedL < 0) {
+
                 Motor.A.backward();
-                Motor.B.forward();
-                break;
+            }
 
-            case "left" :
+            if(speedR < 0) {
 
-                Motor.A.stop();
-                Motor.B.forward();
-                break;
-
-            case "right" :
-
-                Motor.A.forward();
-                Motor.B.stop();
-                break;
-            case "stop" :
-                Motor.A.stop();
-                Motor.B.stop();
-                break;
+                Motor.B.backward();
+            }
+        } else {
+            switch(inputLine) {
+                case "fire" :
+                    Motor.A.forward();
+                    //Motor.B.backward();
+                    break;
+                case "playsound":
+                    break;
+            }
         }
     }
 }

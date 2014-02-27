@@ -1,6 +1,7 @@
 package leap;
 
 import com.leapmotion.leap.Controller;
+import org.java_websocket.WebSocketImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,9 +24,15 @@ public class CommandClient {
             Controller controller = new Controller();
             LeapListener leapListener = new LeapListener(out);
             controller.addListener(leapListener);
+
+            WebSocketHandler whIn = new WebSocketHandler(8888, out);
+            whIn.start();
+
             while (true) {
 
             }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
         }
     }
 
@@ -34,11 +41,14 @@ public class CommandClient {
         int portNumber = 69;
 
         try(
-                Socket socket = new Socket(hostName, portNumber);
+            Socket socket = new Socket(hostName, portNumber);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()))
+                    new InputStreamReader(socket.getInputStream()));
         ) {
+
+            WebSocketHandler whIn = new WebSocketHandler(8888, out);
+            whIn.start();
 
             Controller controller = new Controller();
             LeapListener leapListener = new LeapListener(out);
