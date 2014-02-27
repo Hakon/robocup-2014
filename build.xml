@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EV3Server" default="cleanAfter" basedir=".">
+
+	<!-- change the main class name if not equal to the project name -->
+	<property name="main-class" value="${ant.project.name}" />
+	<property name="ev3.ipaddr" value="192.168.0.104" /> <!-- Bytt ip-adressen til din ev3-brick her-->
+	<property name="ev3.user" value="root" />
+	<property name="ev3.password" value="" />
+	<!--  change the value here by the path of the directory where ev3classes.jar is -->
+	<property name="ev3classes.path" value="lib" />
+	<property name="src" value="src" />
+	<property name="build" value="bin" />
+
+	<path id="compile.classpath">
+		<fileset dir="${ev3classes.path}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="cleanBefore" description="clean up">
+		<delete dir="${build}" />
+	</target>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the sources">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" excludes="**/leap/*" destdir="${build}" includeantruntime="false">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="upload" depends="compile" description="Upload the class file to the EV3">
+		<scp file="${build}/${main-class}.class" todir="${ev3.user}@${ev3.ipaddr}:lejos/code" password="${ev3.password}" trust="true"/>
+	</target>
+
+
+	<target name="run" depends="upload">
+		<sshexec 
+        host="${ev3.ipaddr}" 
+        username="${ev3.user}" 
+        password="${ev3.password}" 
+        command="cd lejos/code; jrun ${main-class}"
+		trust="true"
+        />
+	</target>
+
+	<target name="cleanAfter" depends="run" description="clean up">
+		<delete dir="${build}" />
+	</target>
+	
+	<target name="clean" description="clean up">
+		<delete dir="${build}" />
+	</target>
+	
+	
+	<target name="shutdownEV3">
+		<sshexec 
+        host="${ev3.ipaddr}" 
+        username="${ev3.user}" 
+        password="${ev3.password}" 
+        command="halt"
+		trust="true"
+        />
+	</target>
+
+</project>
