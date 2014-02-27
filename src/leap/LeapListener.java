@@ -73,12 +73,10 @@ public class LeapListener extends Listener {
             speed = normalise(speed);
             turn = normalise(turn);
 
-            sendCommand("speed " + ((int)speed) + " " + ((int)turn));
+            sendCommand("speed " + ((int) speed) + " " + ((int) turn));
         }
-
-        if(firstHandId != -1) {
-            Hand firstHand = frame.hand(firstHandId);
-            System.out.println("First hand: " + firstHand);
+        if(hands.count() == 0) {
+            sendCommand("speed 0 0");
         }
     }
 

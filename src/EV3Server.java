@@ -2,10 +2,7 @@ import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.regex.Matcher;
@@ -65,6 +62,7 @@ public class EV3Server {
             int turn = Integer.parseInt(split[2]);
 
             float maxSpeed = (Motor.A.getMaxSpeed() + Motor.B.getMaxSpeed() / 2);
+            System.out.println("maxspeed: " + maxSpeed);
             double speedModifier = (speed / 150.0);
 
             turn += 150;
@@ -104,9 +102,11 @@ public class EV3Server {
         } else {
             switch(inputLine) {
                 case "fire" :
-                    Motor.C.forward();
-                    playFiringSound();
-                    //Motor.B.backward();
+                    Motor.C.setSpeed(Motor.C.getMaxSpeed());
+                    Motor.C.setAcceleration(100000);
+                    Motor.C.rotate(360);
+                    //playFiringSound();
+                    //playSong();
                     break;
                 case "playsound":
                     playSong();
@@ -116,7 +116,7 @@ public class EV3Server {
     }
 
     public static void playFiringSound(){
-        /*short[] note = {2349, 115, 0, 5, 1760, 165, 0, 35};
+        short[] note = {2349, 115, 0, 5, 1760, 165, 0, 35};
         for(int i=0; i<note.length; i+=2){
             short w = note[i+1];
             int n = note[i];
@@ -128,10 +128,10 @@ public class EV3Server {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
     public static void playSong(){
-        return;
+        Sound.playSample(new File("/home/root/giveyouup.wav"), Sound.VOL_MAX);
     }
 }
