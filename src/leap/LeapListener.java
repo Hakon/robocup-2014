@@ -1,18 +1,14 @@
 package leap;
 
-import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Frame;
-import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.Type;
-import com.leapmotion.leap.GestureList;
-import com.leapmotion.leap.Hand;
-import com.leapmotion.leap.Listener;
-import com.leapmotion.leap.Screen;
 
 import java.io.PrintWriter;
 
 public class LeapListener extends Listener {
     private static final long CHANGE_INTERVAL = 50;
+
+
 
     private long startTime;
     private PrintWriter printWriter;
@@ -29,6 +25,7 @@ public class LeapListener extends Listener {
     public void onConnect(Controller controller) {
         System.out.println("Controller has been connected");
         controller.enableGesture(Type.TYPE_CIRCLE);
+        controller.enableGesture(Type.TYPE_SWIPE);
     }
 
     @Override
@@ -66,17 +63,47 @@ public class LeapListener extends Listener {
             return;
         }
 
-        int handsCount = frame.hands().count();
+        
+        //System.out.println("handsCount = " + handsCount);
 
-        System.out.println("handsCount = " + handsCount);
-        if(handsCount == 1) {
-            commandClient.driveForward();
+        GestureList gestures = frame.gestures();
+        for(int i = 0; i < gestures.count(); i++ ) {
+            Gesture gesture = gestures.get(i);
+            switch(gesture.type()) {
+                case TYPE_SWIPE:
+                    SwipeGesture swipe = new SwipeGesture(gesture);
+                    System.out.println("Swipe distance: " + swipe.startPosition().distanceTo(swipe.position()));
+                    if(swipe.startPosition().distanceTo(swipe.position()) > 10) {
+                        if(swipe.direction().getX() > 0){
+                            sendCommand("continue");
+                            stopped = false;
+                        }else{
+                            sendCommand("abort");
+                            System.out.println("STOP: " + swipe.direction().getY());
+                            stopped = true;
+                        }
+                    }
+
+                    break;
+                case TYPE_KEY_TAP:
+                    if(!stopped)
+                        sendCommand("fire");
+                break;
+            }
         }
-        if(handsCount == 2) {
-            commandClient.driveLeft();
-        }
-        if(handsCount == 3) {
-            commandClient.driveRight();
+
+        if (!stopped){
+            int handsCount = frame.hands().count();
+
+            if(handsCount == 2) {
+                sendCommand("forward");
+            }
+            if(handsCount == 3) {
+                sendCommand("left");
+            }
+            if(handsCount == 4) {
+                sendCommand("right");
+            }
         }
 
 

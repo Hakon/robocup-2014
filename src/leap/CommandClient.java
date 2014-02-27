@@ -57,6 +57,13 @@ public class CommandClient {
         }
     }
 
+  /*  public void abort() {
+        outWriter.println("abort");
+    }
+    public void carryon() {
+        outWriter.println("continue");
+    }
+
     public void driveForward() {
         outWriter.println("forward");
     }
@@ -65,5 +72,5 @@ public class CommandClient {
     }
     public void driveRight() {
         outWriter.println("right");
-    }
+    }*/
 }
