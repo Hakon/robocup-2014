@@ -12,7 +12,6 @@ import static java.lang.Math.abs;
 
 public class EV3Server {
 
-    public static boolean pause = false;
 
     public static void main(String[] args) throws IOException {
 
@@ -32,12 +31,12 @@ public class EV3Server {
 
             out.println("Connection established. Start sending commands madderfakker!");
 
+            Motor.A.setSpeed();
+
 
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("kommando mottatt: " + inputLine);
                 out.println("kommando mottatt: " + inputLine);
-                LCD.clear();
-                LCD.drawString("cmd: " + inputLine, 0, 5);
 
                 processCommand(inputLine);
 
@@ -58,11 +57,13 @@ public class EV3Server {
     }
 
     public static void processCommand(String inputLine) {
-        if(pause && inputLine != "continue")
-            return;
         switch(inputLine) {
-            case "forward" :
+            case "forwards" :
                 Motor.A.forward();
+                Motor.B.backward();
+                break;
+            case "backwards" :
+                Motor.A.backward();
                 Motor.B.forward();
                 break;
 
@@ -77,17 +78,10 @@ public class EV3Server {
                 Motor.A.forward();
                 Motor.B.stop();
                 break;
-            case "abort" :
+            case "stop" :
                 Motor.A.stop();
                 Motor.B.stop();
-                pause = true;
-            case "continue" :
-                pause = false;
-            case "fire" :
-                Motor.C.setAcceleration(10000);
-                Motor.C.setSpeed(10000);
-                Motor.C.rotate(-75);
-                Motor.C.rotate(75);
+                break;
         }
     }
 }

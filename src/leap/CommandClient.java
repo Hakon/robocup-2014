@@ -10,13 +10,23 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class CommandClient {
-    PrintWriter outWriter;
-    BufferedReader inReader;
 
     public static void main(String[] args) {
 
         new CommandClient().run();
+        //new CommandClient().test();
 
+    }
+
+    public void test() {
+        try(PrintWriter out = new PrintWriter(System.out)) {
+            Controller controller = new Controller();
+            LeapListener leapListener = new LeapListener(out);
+            controller.addListener(leapListener);
+            while (true) {
+
+            }
+        }
     }
 
     public void run() {
@@ -29,11 +39,9 @@ public class CommandClient {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()))
         ) {
-            outWriter = out;
-            inReader = in;
 
             Controller controller = new Controller();
-            LeapListener leapListener = new LeapListener(out, this);
+            LeapListener leapListener = new LeapListener(out);
             controller.addListener(leapListener);
 
 
@@ -56,21 +64,4 @@ public class CommandClient {
             e.printStackTrace();
         }
     }
-
-  /*  public void abort() {
-        outWriter.println("abort");
-    }
-    public void carryon() {
-        outWriter.println("continue");
-    }
-
-    public void driveForward() {
-        outWriter.println("forward");
-    }
-    public void driveLeft() {
-        outWriter.println("left");
-    }
-    public void driveRight() {
-        outWriter.println("right");
-    }*/
 }

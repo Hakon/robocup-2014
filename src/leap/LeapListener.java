@@ -8,17 +8,16 @@ import java.io.PrintWriter;
 public class LeapListener extends Listener {
     private static final long CHANGE_INTERVAL = 50;
 
-
+    int firstHandId = -1;
+    int secondHandId = -1;
 
     private long startTime;
     private PrintWriter printWriter;
     private String lastSentCommand;
-    private CommandClient commandClient;
 
-    public LeapListener(PrintWriter printWriter, CommandClient client) {
+    public LeapListener(PrintWriter printWriter) {
         this.printWriter = printWriter;
         startTime = System.currentTimeMillis();
-        commandClient = client;
     }
 
     @Override
@@ -63,49 +62,37 @@ public class LeapListener extends Listener {
             return;
         }
 
-        
         //System.out.println("handsCount = " + handsCount);
+        HandList hands = frame.hands();
 
-        GestureList gestures = frame.gestures();
-        for(int i = 0; i < gestures.count(); i++ ) {
-            Gesture gesture = gestures.get(i);
-            switch(gesture.type()) {
-                case TYPE_SWIPE:
-                    SwipeGesture swipe = new SwipeGesture(gesture);
-                    System.out.println("Swipe distance: " + swipe.startPosition().distanceTo(swipe.position()));
-                    if(swipe.startPosition().distanceTo(swipe.position()) > 10) {
-                        if(swipe.direction().getX() > 0){
-                            sendCommand("continue");
-                            stopped = false;
-                        }else{
-                            sendCommand("abort");
-                            System.out.println("STOP: " + swipe.direction().getY());
-                            stopped = true;
-                        }
-                    }
+        Hand rightHand = hands.rightmost();
+        Hand leftHand = hands.leftmost();
 
-                    break;
-                case TYPE_KEY_TAP:
-                    if(!stopped)
-                        sendCommand("fire");
-                break;
+        if(hands.count() > 0) {
+            float rightZ = rightHand.stabilizedPalmPosition().getZ();
+            //System.out.println("Z: " + rightZ);
+            if(rightZ > 40)
+                sendCommand("backwards");
+            if(rightZ < -40)
+                sendCommand("forwards");
+            if(rightZ < 40 && rightZ > -40)
+                sendCommand("stop");
+
+            if(hands.count() > 1) {
+                float roll = leftHand.direction().yaw();
+
+                System.out.println("roll: " + roll);
+
+                //PointableList leftPointables = leftHand.pointables();
+                //if(leftPointables.count() > 1)
+                //   sendCommand("setAngle: " + pointables.leftmost().stabilizedTipPosition().yaw());
             }
         }
 
-        if (!stopped){
-            int handsCount = frame.hands().count();
-
-            if(handsCount == 2) {
-                sendCommand("forward");
-            }
-            if(handsCount == 3) {
-                sendCommand("left");
-            }
-            if(handsCount == 4) {
-                sendCommand("right");
-            }
+        if(firstHandId != -1) {
+            Hand firstHand = frame.hand(firstHandId);
+            System.out.println("First hand: " + firstHand);
         }
-
 
         startTime = System.currentTimeMillis();
     }
