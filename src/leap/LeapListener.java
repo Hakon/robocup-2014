@@ -17,10 +17,12 @@ public class LeapListener extends Listener {
     private long startTime;
     private PrintWriter printWriter;
     private String lastSentCommand;
+    private CommandClient commandClient;
 
-    public LeapListener(PrintWriter printWriter) {
+    public LeapListener(PrintWriter printWriter, CommandClient client) {
         this.printWriter = printWriter;
         startTime = System.currentTimeMillis();
+        commandClient = client;
     }
 
     @Override
@@ -67,6 +69,16 @@ public class LeapListener extends Listener {
         int handsCount = frame.hands().count();
 
         System.out.println("handsCount = " + handsCount);
+        if(handsCount == 1) {
+            commandClient.driveForward();
+        }
+        if(handsCount == 2) {
+            commandClient.driveLeft();
+        }
+        if(handsCount == 3) {
+            commandClient.driveRight();
+        }
+
 
         startTime = System.currentTimeMillis();
     }

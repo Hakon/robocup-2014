@@ -35,7 +35,10 @@ public class EV3Server {
                 out.println("kommando mottatt: " + inputLine);
                 LCD.clear();
                 LCD.drawString("cmd: " + inputLine, 0, 5);
-                
+
+                processCommand(inputLine);
+
+
             }
         } catch (
                 IOException e
@@ -49,5 +52,27 @@ public class EV3Server {
         }
 
         System.out.println("Exiting...");
+    }
+
+    public static void processCommand(String inputLine) {
+        switch(inputLine) {
+            case "forward" :
+                Motor.A.forward();
+                Motor.B.forward();
+                break;
+
+            case "left" :
+
+                Motor.A.stop();
+                Motor.B.forward();
+                break;
+
+            case "right" :
+
+                Motor.A.forward();
+                Motor.B.stop();
+                break;
+
+        }
     }
 }

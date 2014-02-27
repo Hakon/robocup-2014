@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="256150ea-2b91-4b1f-86bc-6d7e003eda29" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/EV3Server.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/leap/CommandClient.java" afterPath="$PROJECT_DIR$/src/leap/CommandClient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EV3Server.java" afterPath="$PROJECT_DIR$/src/EV3Server.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/leap/LeapListener.java" afterPath="$PROJECT_DIR$/src/leap/LeapListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="finale.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,26 +74,28 @@
       <file leaf-file-name="LeapListener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/leap/LeapListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="57" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="634" max-vertical-offset="1230">
+            <state line="79" column="9" selection-start="2281" selection-end="2281" vertical-scroll-proportion="0.0" vertical-offset="814" max-vertical-offset="1410">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EV3Server.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="EV3Server.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EV3Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="16" selection-start="1266" selection-end="1266" vertical-scroll-proportion="0.4714765" vertical-offset="124" max-vertical-offset="735">
+            <state line="72" column="31" selection-start="2100" selection-end="2100" vertical-scroll-proportion="0.0" vertical-offset="514" max-vertical-offset="1110">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandClient.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CommandClient.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/leap/CommandClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="33" selection-start="1043" selection-end="1043" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="750">
-              <folding />
+            <state line="22" column="40" selection-start="478" selection-end="478" vertical-scroll-proportion="0.12583892" vertical-offset="255" max-vertical-offset="1125">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,7 +103,7 @@
       <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="29" selection-start="1977" selection-end="1977" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1140">
+            <state line="62" column="29" selection-start="1977" selection-end="1977" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1155">
               <folding />
             </state>
           </provider>
@@ -118,16 +122,16 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/leap/CommandClient.java" />
         <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/leap/LeapListener.java" />
         <option value="$PROJECT_DIR$/src/EV3Server.java" />
+        <option value="$PROJECT_DIR$/src/leap/CommandClient.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="140" />
-    <option name="y" value="34" />
+    <option name="x" value="236" />
+    <option name="y" value="22" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -392,8 +396,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="140" y="34" width="1400" height="1000" extended-state="0" />
-    <editor active="true" />
+    <frame x="236" y="22" width="1400" height="1000" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -411,8 +415,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32975295" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32975295" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -451,7 +455,9 @@
     <entry file="file://$PROJECT_DIR$/src/leap/CommandClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="33" selection-start="501" selection-end="501" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="750">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -462,24 +468,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/leap/CommandClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="33" selection-start="1043" selection-end="1043" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="750">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/leap/LeapListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="57" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="634" max-vertical-offset="1230">
+        <state line="79" column="9" selection-start="2281" selection-end="2281" vertical-scroll-proportion="0.0" vertical-offset="645" max-vertical-offset="1410">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EV3Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="16" selection-start="1266" selection-end="1266" vertical-scroll-proportion="0.4714765" vertical-offset="124" max-vertical-offset="735">
+        <state line="72" column="31" selection-start="2100" selection-end="2100" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1110">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/leap/CommandClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="40" selection-start="478" selection-end="478" vertical-scroll-proportion="0.12583892" vertical-offset="255" max-vertical-offset="1125">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

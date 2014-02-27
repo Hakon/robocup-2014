@@ -3,7 +3,7 @@
 
 	<!-- change the main class name if not equal to the project name -->
 	<property name="main-class" value="${ant.project.name}" />
-	<property name="ev3.ipaddr" value="192.168.0.104" /> <!-- Bytt ip-adressen til din ev3-brick her-->
+	<property name="ev3.ipaddr" value="192.168.0.102" /> <!-- Bytt ip-adressen til din ev3-brick her-->
 	<property name="ev3.user" value="root" />
 	<property name="ev3.password" value="" />
 	<!--  change the value here by the path of the directory where ev3classes.jar is -->
