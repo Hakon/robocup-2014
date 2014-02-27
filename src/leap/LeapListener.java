@@ -63,28 +63,17 @@ public class LeapListener extends Listener {
             return;
         }
 
-        //System.out.println("handsCount = " + handsCount);
         HandList hands = frame.hands();
-
         Hand rightHand = hands.rightmost();
-        Hand leftHand = hands.leftmost();
 
-        if(hands.count() > 1) {
-            float rightZ = rightHand.palmPosition().getZ();
-            float leftZ = leftHand.palmPosition().getZ();
+        if(rightHand != null) {
+            float speed = rightHand.palmPosition().getZ();
+            float turn = rightHand.palmPosition().getX();
 
-            rightZ = normalise(rightZ);
-            leftZ = normalise(leftZ);
+            speed = normalise(speed);
+            turn = normalise(turn);
 
-
-            //System.out.println("Z: " + rightZ);
-            if(rightZ < 40 && rightZ > -40)
-                rightZ = 0;
-
-            if(leftZ < 40 && leftZ > -40)
-                leftZ = 0;
-
-            sendCommand("speed " + ((int)-leftZ) + " " + ((int)-rightZ));
+            sendCommand("speed " + ((int)speed) + " " + ((int)turn));
         }
 
         if(firstHandId != -1) {
@@ -107,9 +96,11 @@ public class LeapListener extends Listener {
     }
 
     private float normalise(float num){
+        if (Math.abs(num) < 40)
+            return 0;
+
         int sign = (num >= 0) ? (num == 0) ? 0 : 1 : -1;
         float normalisedValue = Math.min(150, Math.abs(num));
-
         return sign*normalisedValue;
     }
 }

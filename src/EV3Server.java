@@ -61,11 +61,15 @@ public class EV3Server {
     public static void processCommand(String inputLine) {
         String[] split = inputLine.split(" ");
         if(split[0].equals("speed")) {
-            int speedL = Integer.parseInt(split[1]);
-            int speedR = Integer.parseInt(split[2]);
+            int speed = Integer.parseInt(split[1]);
+            int turn = Integer.parseInt(split[2]);
 
-            speedL = (int)-(speedL / 150.0 * Motor.A.getMaxSpeed());
-            speedR = (int)-(speedR / 150.0 * Motor.B.getMaxSpeed());
+            float maxSpeed = (Motor.A.getMaxSpeed() + Motor.B.getMaxSpeed() / 2);
+            double speedModifier = (speed / 150.0);
+
+            turn += 150;
+            int speedL = (int) (maxSpeed * (speedModifier*((300.0-turn)/300.0)));
+            int speedR = (int) (maxSpeed * (speedModifier*(turn/300.0)));
 
             Motor.A.setSpeed(speedL);
             Motor.B.setSpeed(speedR);
@@ -100,12 +104,34 @@ public class EV3Server {
         } else {
             switch(inputLine) {
                 case "fire" :
-                    Motor.A.forward();
+                    Motor.C.forward();
+                    playFiringSound();
                     //Motor.B.backward();
                     break;
                 case "playsound":
+                    playSong();
                     break;
             }
         }
+    }
+
+    public static void playFiringSound(){
+        /*short[] note = {2349, 115, 0, 5, 1760, 165, 0, 35};
+        for(int i=0; i<note.length; i+=2){
+            short w = note[i+1];
+            int n = note[i];
+            if (n != 0)
+                Sound.playTone(n, w * 10);
+
+            try {
+                Thread.sleep(w*10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }*/
+    }
+
+    public static void playSong(){
+        return;
     }
 }
